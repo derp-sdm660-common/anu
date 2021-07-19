@@ -7,13 +7,11 @@ lunch derp_vayu-user
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
+export TZ=Asia/Kolkata #put before last build command
 ccache -M 20G
 ccache -o compression=true
 ccache -z
 
-mka api-stubs-docs || echo no problem, we need ccache
-mka system-api-stubs-docs || echo no problem we need ccache
-mka test-api-stubs-docs || echo no problem, we need ccache
 mka derp -j8 & # dont remove that '&'
 sleep 90m
 kill %1
