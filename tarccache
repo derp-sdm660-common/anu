@@ -4,8 +4,8 @@ cd /tmp
 
 curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Compress ccache start at $(date)&chat_id=${tg_id}&parse_mode=html"
 
-com () 
-{ 
+com ()
+{
     tar --use-compress-program="pigz -k -$2 " -cf $1.tar.gz $1
 }
 

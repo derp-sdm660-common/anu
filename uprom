@@ -1,9 +1,15 @@
 #!/bin/bash
 
+ls /tmp/rom/out
+
+cd /tmp
+
 curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Uploading ROM if exist at $(date)&chat_id=${tg_id}&parse_mode=html"
 
-time rclone copy /tmp/rom/out/target/product/juice/*.zip inok:juice -P
+send_zip=$(ls rom/out/target/product/vayu/*.zip)
 
-dlink=$(basename /tmp/out/target/product/juice/*.zip)
+time rclone copy $send_zip remote:vayuccache -P
 
-curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Download ROM Link https://anu.inok189.workers.dev/juice/$(dlink)&chat_id=${tg_id}&parse_mode=html"
+dlink=$(basename rom/out/target/product/vayu/*.zip)
+
+curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Download ROM Link https://ap.apd1.workers.dev/4:/vayuccache/$(dlink)&chat_id=${tg_id}&parse_mode=html"
