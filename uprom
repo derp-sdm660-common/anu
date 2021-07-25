@@ -8,8 +8,8 @@ curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Upload
 
 send_zip=$(ls rom/out/target/product/vayu/*.zip)
 
-time rclone copy $send_zip remote:vayuccache -P
+time rclone copy $send_zip remote:havoc -P
 
 dlink=$(basename rom/out/target/product/vayu/*.zip)
 
-curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Download ROM Link https://ap.apd1.workers.dev/4:/vayuccache/$(dlink)&chat_id=${tg_id}&parse_mode=html"
+curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Download ROM Link https://ap.apd1.workers.dev/4:/havoc/$(dlink)&chat_id=${tg_id}&parse_mode=html"
