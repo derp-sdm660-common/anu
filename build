@@ -12,7 +12,9 @@ ccache -M 20G
 ccache -o compression=true
 ccache -z
 
-mka bacon -j8 & # dont remove that '&'
-sleep 90m
-kill %1
-ccache -s
+#mka bacon -j8 & # dont remove that '&'
+#sleep 90m
+#kill %1
+#ccache -s
+
+mka bacon -j8
