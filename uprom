@@ -6,10 +6,10 @@ cd /tmp
 
 curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Uploading ROM if exist at $(date)&chat_id=${tg_id}&parse_mode=html"
 
-send_zip=$(ls rom/out/target/product/vayu/*.zip)
+send_zip=$(ls rom/out/target/product/vayu/Havoc-OS*.zip)
 
 time rclone copy $send_zip remote:havoc -P
 
-dlink=$(basename rom/out/target/product/vayu/*.zip)
+dlink=$(basename rom/out/target/product/vayu/Havoc-OS*.zip)
 
 curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Download ROM Link https://ap.apd1.workers.dev/4:/havoc/$(dlink)&chat_id=${tg_id}&parse_mode=html"
