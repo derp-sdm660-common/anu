@@ -6,10 +6,12 @@ cd /tmp
 
 curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Uploading ROM if exist at $(date)&chat_id=${tg_id}&parse_mode=html"
 
-send_zip=$(ls rom/out/target/product/vayu/*.zip)
+send_zip=$(ls rom/out/target/product/X00T/DerpFest*.zip)
 
-time rclone copy $send_zip remote:vayuccache -P
+time rclone copy $send_zip remote:ccache -P
 
-dlink=$(basename rom/out/target/product/vayu/*.zip)
+basename rom/out/target/product/X00T/DerpFest*.zip
 
-curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Download ROM Link https://ap.apd1.workers.dev/4:/vayuccache/$(dlink)&chat_id=${tg_id}&parse_mode=html"
+dlink=$(basename rom/out/target/product/X00T/DerpFest*.zip)
+
+curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Download ROM Link https://ap.apd1.workers.dev/4:/ccache/$(dlink)&chat_id=${tg_id}&parse_mode=html"

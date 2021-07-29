@@ -6,7 +6,7 @@ env:
     tg_id: "ENCRYPTED[30bb0149dbb9065c24e0053071cf7148fd3575dcecb089cb07324106123fc02826a69407b3be9ef9a878f91804b5e62c]"
 
 task:
-    name: sedness
+    name: X00T
     timeout_in: 120m
     container:
       image: inok2341/builder:latest
@@ -17,9 +17,10 @@ task:
       - mkdir -p ~/.config/rclone
       - echo "$rclone_config" > ~/.config/rclone/rclone.conf
     download_ccache_background_script:
+      - TZ=Asia/Kolkata
       - curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Download ccache at $(date)&chat_id=${tg_id}&parse_mode=html"
       - df -h && free -h && nproc && cat /etc/os* && env
-      - curl https://ap.apd1.workers.dev/4:/vayuccache/ccache.tar.gz -o /tmp/ccache.tar.gz
+      - curl https://ap.apd1.workers.dev/4:/ccache/ccache.tar.gz -o /tmp/ccache.tar.gz
       - cd /tmp
       - time tar xf ccache.tar.gz
       - rm -rf ccache.tar.gz
@@ -30,14 +31,14 @@ task:
       - mkdir -p /tmp/rom # Where to sync source
       - cd /tmp/rom
       - repo init -q --no-repo-verify --depth=1 -u git://github.com/DerpFest-11/manifest.git -b 11 -g default,-device,-mips,-darwin,-notdefault
-      - git clone https://github.com/pocox3pro/Local-Manifests -b master --depth=1 .repo/local_manifests
+      - git clone https://github.com/derp-sdm660-common/Local-Manifests -b derp4.19 --depth=1 .repo/local_manifests
       - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 30 || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 8
     monitor_background_script:
       - ./monitor
     build_script:
       - curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Build ROM at $(date)&chat_id=${tg_id}&parse_mode=html"
       - ./build
-      - time rclone copy /tmp/rom/out/error.log remote:vayuccache -P
+      - time rclone copy /tmp/rom/out/error.log remote:ccache -P
     upload_rom_script:
       - ./uprom
     compress_ccache_script:    
@@ -45,5 +46,5 @@ task:
     upload_ccache_script:
       - cd /tmp
       - curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Uploading ccache at $(date)&chat_id=${tg_id}&parse_mode=html"
-      - time rclone copy ccache.tar.gz remote:vayuccache -P 
+      - time rclone copy ccache.tar.gz remote:ccache -P 
       - curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" --data "text=Upload ccache done at $(date)&chat_id=${tg_id}&parse_mode=html"
